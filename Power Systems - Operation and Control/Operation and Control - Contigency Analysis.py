@@ -3,9 +3,7 @@ import os
 import numpy as np
 import pandas as pd
 
-# -----------------------------------------------------------------------------
-# 1. Data Input Functions
-# -----------------------------------------------------------------------------
+
 def read_excel_files():
 
     base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -79,9 +77,9 @@ def build_injection_vector(num_buses, load_df, gen_df, slack_bus=0):
     injections[slack_bus] = -np.sum(np.delete(injections, slack_bus))
     return injections
 
-# -----------------------------------------------------------------------------
+
 # 2. DC Power Flow Functions
-# -----------------------------------------------------------------------------
+
 def build_B_matrix(num_buses, lines):
     """
     Build the full susceptance matrix B (size: num_buses x num_buses) from the 
@@ -150,9 +148,9 @@ def compute_performance_index(flows, lines):
         PI += (abs(flow) / flow_limit)**2
     return PI
 
-# -----------------------------------------------------------------------------
+
 # 3. Contingency Analysis Functions
-# -----------------------------------------------------------------------------
+
 def contingency_analysis(num_buses, B, injections, lines, slack_bus=0):
     """
     For each candidate line outage, remove the line, resolve the DC load flow,
@@ -193,9 +191,9 @@ def contingency_analysis(num_buses, B, injections, lines, slack_bus=0):
     return contingency_results, PI_base
 
 
-# -----------------------------------------------------------------------------
-# 4. Sensitivity (PTDF and LODF) Functions
-# -----------------------------------------------------------------------------
+
+# Sensitivity (PTDF and LODF) Functions
+
 def get_reduced_mapping(num_buses, slack_bus=0):
     """
     Create a mapping from full bus indices to the reduced indices (excluding the slack bus).
